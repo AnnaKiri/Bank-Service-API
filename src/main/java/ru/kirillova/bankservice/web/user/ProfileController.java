@@ -8,9 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +19,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.kirillova.bankservice.model.BankAccount;
 import ru.kirillova.bankservice.model.User;
 import ru.kirillova.bankservice.repository.BankAccountRepository;
-import ru.kirillova.bankservice.repository.UserRepository;
 import ru.kirillova.bankservice.to.UserTo;
 import ru.kirillova.bankservice.to.UserUpdateTo;
 import ru.kirillova.bankservice.util.UsersUtil;
@@ -35,31 +32,13 @@ import static ru.kirillova.bankservice.validation.ValidationUtil.checkNew;
 
 @RestController
 @RequestMapping(value = ProfileController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class ProfileController {
+public class ProfileController extends AbstractUserController {
     static final String REST_URL = "/profile";
 
     private final Logger log = getLogger(getClass());
 
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private UniqueMailValidator emailValidator;
-    @Autowired
     private BankAccountRepository bankAccountRepository;
-    @Autowired
-    private PhoneOrEmailPresenceValidator phoneOrEmailPresenceValidator;
-    @Autowired
-    private UniquePhoneValidator phoneValidator;
-    @Autowired
-    private UniqueUsernameValidator uniqueUsernameValidator;
-
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) {
-        binder.addValidators(emailValidator);
-        binder.addValidators(phoneOrEmailPresenceValidator);
-        binder.addValidators(phoneValidator);
-        binder.addValidators(uniqueUsernameValidator);
-    }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
