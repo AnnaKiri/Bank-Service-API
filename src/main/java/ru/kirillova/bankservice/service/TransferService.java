@@ -36,8 +36,8 @@ public class TransferService {
             throw new IllegalArgumentException("You can't transfer to yourself");
         }
 
-        BankAccount senderBankAccount = bankAccountRepository.get(senderUserId);
-        BankAccount receiverBankAccount = bankAccountRepository.get(receiverUserId);
+        BankAccount senderBankAccount = bankAccountRepository.getByUserId(senderUserId);
+        BankAccount receiverBankAccount = bankAccountRepository.getByUserId(receiverUserId);
 
         Object lock1;
         Object lock2;

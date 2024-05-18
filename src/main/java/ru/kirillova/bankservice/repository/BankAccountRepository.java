@@ -24,5 +24,5 @@ public interface BankAccountRepository extends JpaRepository<BankAccount, Intege
     }
 
     @Query("SELECT b FROM BankAccount b WHERE b.user.id = :userId")
-    BankAccount get(int userId);
+    BankAccount getByUserId(int userId);
 }
