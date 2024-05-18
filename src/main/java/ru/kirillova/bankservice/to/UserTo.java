@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import ru.kirillova.bankservice.HasIdAndEmail;
+import ru.kirillova.bankservice.validation.NoHtml;
 
 @Getter
 @Setter
@@ -20,6 +21,7 @@ public class UserTo extends BaseTo implements HasIdAndEmail {
 
     @Email(message = "Email should be valid")
     @NotBlank(message = "Email is required")
+    @NoHtml
     private String email;
 
     public UserTo(Integer id, String phone, String email) {

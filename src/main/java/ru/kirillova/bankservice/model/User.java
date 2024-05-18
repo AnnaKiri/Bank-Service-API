@@ -21,6 +21,7 @@ import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import ru.kirillova.bankservice.HasIdAndEmail;
+import ru.kirillova.bankservice.validation.NoHtml;
 
 import java.time.LocalDate;
 
@@ -38,6 +39,7 @@ public class User extends AbstractBaseEntity implements HasIdAndEmail {
 
     @NotBlank(message = "Username is required")
     @Column(nullable = false, unique = true)
+    @NoHtml
     private String username;
 
     @NotBlank(message = "Password is required")
@@ -53,6 +55,7 @@ public class User extends AbstractBaseEntity implements HasIdAndEmail {
     @Email(message = "Email should be valid")
     @NotBlank(message = "Email is required")
     @Column(nullable = false, unique = true)
+    @NoHtml
     private String email;
 
     @NotNull(message = "Birth date is required")
@@ -62,6 +65,7 @@ public class User extends AbstractBaseEntity implements HasIdAndEmail {
 
     @NotBlank(message = "Full name is required")
     @Column(nullable = false)
+    @NoHtml
     private String fullName;
 
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
