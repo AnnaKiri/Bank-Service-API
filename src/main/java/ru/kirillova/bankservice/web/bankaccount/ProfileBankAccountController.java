@@ -1,5 +1,6 @@
 package ru.kirillova.bankservice.web.bankaccount;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -19,6 +20,7 @@ import java.util.List;
 @RequestMapping(value = ProfileBankAccountController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 @AllArgsConstructor
+@SecurityRequirement(name = "Bearer Authentication")
 public class ProfileBankAccountController {
     static final String REST_URL = "/profile/bankaccounts";
 

@@ -1,5 +1,6 @@
 package ru.kirillova.bankservice.web.user;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.slf4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +18,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 @RestController
 @RequestMapping(value = UserController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@SecurityRequirement(name = "Bearer Authentication")
 public class UserController extends AbstractUserController {
     static final String REST_URL = "/users";
 

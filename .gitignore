@@ -33,3 +33,4 @@ build/
 ### VS Code ###
 .vscode/
 /src/main/resources/db/db-config.yaml
+/src/main/resources/jwt-config.yaml

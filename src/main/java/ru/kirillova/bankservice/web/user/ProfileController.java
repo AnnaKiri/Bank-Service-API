@@ -1,5 +1,6 @@
 package ru.kirillova.bankservice.web.user;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ import static ru.kirillova.bankservice.validation.ValidationUtil.checkNew;
 
 @RestController
 @RequestMapping(value = ProfileController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@SecurityRequirement(name = "Bearer Authentication")
 public class ProfileController extends AbstractUserController {
     static final String REST_URL = "/profile";
 
@@ -43,6 +45,7 @@ public class ProfileController extends AbstractUserController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     @Transactional
+    @SecurityRequirement(name = "")
     public ResponseEntity<User> register(@Valid @RequestBody UserTo userTo) {
         log.info("register a new user {}", userTo);
         checkNew(userTo);

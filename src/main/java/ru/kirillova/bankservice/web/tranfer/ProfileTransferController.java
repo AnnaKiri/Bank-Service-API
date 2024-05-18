@@ -1,5 +1,6 @@
 package ru.kirillova.bankservice.web.tranfer;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,7 @@ import static ru.kirillova.bankservice.validation.ValidationUtil.checkNew;
 @RequestMapping(value = ProfileTransferController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 @AllArgsConstructor
+@SecurityRequirement(name = "Bearer Authentication")
 public class ProfileTransferController {
     static final String REST_URL = "/profile/transfers";
 
