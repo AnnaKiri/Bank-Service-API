@@ -1,0 +1,35 @@
+spring:
+  config:
+    import: classpath:db/db-config.yaml
+
+  jpa:
+    show-sql: true
+    open-in-view: false
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 20
+        jdbc.batch_size: 20
+
+  sql:
+    init:
+      schema-locations: classpath:db/schema.sql
+      data-locations: classpath:db/data.sql
+      mode: always
+
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+logging:
+  level:
+    root: INFO
+    com.bank: DEBUG
+
+springdoc:
+  swagger-ui:
+    path: /
