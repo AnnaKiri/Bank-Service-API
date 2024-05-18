@@ -31,8 +31,9 @@ public class InterestAccrualService {
             Double diffWithInitialBalance = balanceWithInterest - account.getInitialBalance();
             Double maxIncreasingByInterest = account.getInitialBalance() * maxInterestRate;
             Double increasingAllowed = Math.max(maxIncreasingByInterest - diffWithInitialBalance, 0.0);
+            Double newBalance = Math.min(balanceWithInterest, currentBalance + increasingAllowed);
 
-            account.setBalance(currentBalance + increasingAllowed);
+            account.setBalance(newBalance);
             bankAccountRepository.save(account);
         }
     }
