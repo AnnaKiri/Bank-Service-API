@@ -21,6 +21,7 @@ public class BankAccount extends AbstractBaseEntity {
 
     @NotNull(message = "Initial balance is required")
     @Column(nullable = false)
+    @Min(value = 0, message = "Balance must be positive")
     private Double initialBalance;
 
     @NotNull(message = "Balance is required")

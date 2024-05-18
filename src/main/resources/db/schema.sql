@@ -16,9 +16,9 @@ CREATE TABLE users
 CREATE TABLE bank_accounts
 (
     id              INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    initial_balance DOUBLE PRECISION NOT NULL,
-    balance         DOUBLE PRECISION NOT NULL,
-    user_id         BIGINT           NOT NULL,
+    initial_balance DOUBLE PRECISION NOT NULL CHECK (initial_balance >= 0),
+    balance         DOUBLE PRECISION NOT NULL CHECK (balance >= 0),
+    user_id         INTEGER          NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
@@ -27,7 +27,7 @@ CREATE TABLE transfers
     id          INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     sender_id   INTEGER                             NOT NULL,
     receiver_id INTEGER                             NOT NULL,
-    amount      DOUBLE PRECISION                    NOT NULL,
+    amount      DOUBLE PRECISION                    NOT NULL CHECK (amount >= 0),
     timestamp   TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     status      VARCHAR(20)                         NOT NULL,
     FOREIGN KEY (sender_id) REFERENCES users (id) ON DELETE CASCADE,
