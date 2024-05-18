@@ -13,14 +13,17 @@ import ru.kirillova.bankservice.repository.UserRepository;
 @AllArgsConstructor
 public class TransferService {
 
-    private TransferRepository transferRepository;
-    private UserRepository userRepository;
-    private BankAccountRepository bankAccountRepository;
+    private final TransferRepository transferRepository;
+    private final UserRepository userRepository;
+    private final BankAccountRepository bankAccountRepository;
+    private final TransferSaveService transferSaveService;
     private final LockRegistry lockRegistry;
 
     @Transactional
     public Transfer makeTransfer(Integer senderUserId, Integer receiverUserId, Double amount) {
-        Transfer transfer = new Transfer(userRepository.getReferenceById(senderUserId), userRepository.getReferenceById(receiverUserId), amount);
+        Transfer transfer = new Transfer(userRepository.getReferenceById(senderUserId),
+                userRepository.getReferenceById(receiverUserId),
+                amount);
 
         BankAccount senderBankAccount = bankAccountRepository.get(senderUserId);
         BankAccount receiverBankAccount = bankAccountRepository.get(receiverUserId);
@@ -38,10 +41,9 @@ public class TransferService {
 
         synchronized (lock1) {
             synchronized (lock2) {
-
                 if (senderBankAccount.getBalance() < amount) {
                     transfer.setStatus("FAIL");
-                    transferRepository.save(transfer);
+                    transferSaveService.saveTransferWithNewTransaction(transfer);
                     throw new IllegalArgumentException("Insufficient balance");
                 }
 

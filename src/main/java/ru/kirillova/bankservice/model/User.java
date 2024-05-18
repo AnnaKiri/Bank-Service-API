@@ -70,6 +70,7 @@ public class User extends AbstractBaseEntity implements HasIdAndEmail, HasIdAndE
     @NoHtml
     private String fullName;
 
+    @ToString.Exclude
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

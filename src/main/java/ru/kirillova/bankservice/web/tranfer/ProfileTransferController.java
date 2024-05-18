@@ -19,6 +19,7 @@ import ru.kirillova.bankservice.repository.TransferRepository;
 import ru.kirillova.bankservice.repository.UserRepository;
 import ru.kirillova.bankservice.service.TransferService;
 import ru.kirillova.bankservice.to.TransferTo;
+import ru.kirillova.bankservice.util.TransferUtil;
 import ru.kirillova.bankservice.web.AuthUser;
 
 import java.net.URI;
@@ -39,7 +40,7 @@ public class ProfileTransferController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
-    public ResponseEntity<Transfer> createWithLocation(@AuthenticationPrincipal AuthUser authUser, @Valid @RequestBody TransferTo transferTo) {
+    public ResponseEntity<TransferTo> createWithLocation(@AuthenticationPrincipal AuthUser authUser, @Valid @RequestBody TransferTo transferTo) {
         checkNew(transferTo);
 
         Integer senderId = authUser.getUser().id();
@@ -49,23 +50,24 @@ public class ProfileTransferController {
         userRepository.checkExisted(receiverId);
 
         Transfer created = transferService.makeTransfer(senderId, receiverId, amount);
+        TransferTo createdTo = TransferUtil.createTo(created);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
-        return ResponseEntity.created(uriOfNewResource).body(created);
+        return ResponseEntity.created(uriOfNewResource).body(createdTo);
     }
 
     @GetMapping("/{id}")
-    public Transfer get(@AuthenticationPrincipal AuthUser authUser, @PathVariable int id) {
+    public TransferTo get(@AuthenticationPrincipal AuthUser authUser, @PathVariable int id) {
         int userId = authUser.getUser().id();
         log.info("get a transfer for user with id {}", userId);
-        return transferRepository.getBelonged(userId, id);
+        return TransferUtil.createTo(transferRepository.getBelonged(userId, id));
     }
 
     @GetMapping
-    public List<Transfer> getAll(@AuthenticationPrincipal AuthUser authUser) {
+    public List<TransferTo> getAll(@AuthenticationPrincipal AuthUser authUser) {
         int userId = authUser.getUser().id();
         log.info("get all transfers for user with id {}", userId);
-        return transferRepository.getAllByUser(userId);
+        return TransferUtil.getTos(transferRepository.getAllByUser(userId));
     }
 }

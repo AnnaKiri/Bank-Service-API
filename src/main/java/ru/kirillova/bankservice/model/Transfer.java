@@ -59,4 +59,16 @@ public class Transfer extends AbstractBaseEntity {
         this.receiver = receiver;
         this.amount = amount;
     }
+
+    @Override
+    public String toString() {
+        return "Transfer{" +
+                "sender=" + sender.getId() +
+                ", receiver=" + receiver.getId() +
+                ", amount=" + amount +
+                ", timestamp=" + timestamp +
+                ", status='" + status + '\'' +
+                ", id=" + id +
+                '}';
+    }
 }
