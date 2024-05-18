@@ -23,4 +23,7 @@ public interface BankAccountRepository extends BaseRepository<BankAccount> {
         return get(userId, bankAccountId).orElseThrow(
                 () -> new DataConflictException("BankAccount id=" + bankAccountId + " does not exist or doesn't belong to User id=" + userId));
     }
+
+    @Query("SELECT b FROM BankAccount b WHERE b.user.id = :userId")
+    BankAccount get(int userId);
 }

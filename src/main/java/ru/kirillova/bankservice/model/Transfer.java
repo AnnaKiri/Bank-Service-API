@@ -47,20 +47,16 @@ public class Transfer extends AbstractBaseEntity {
     @Column(nullable = false)
     private String status;
 
-    public Transfer(Integer id, User sender, User receiver, Double amount, LocalDateTime timestamp, String status) {
+    public Transfer(Integer id, User sender, User receiver, Double amount) {
         super(id);
         this.sender = sender;
         this.receiver = receiver;
         this.amount = amount;
-        this.timestamp = timestamp;
-        this.status = status;
     }
 
-    public Transfer(User sender, User receiver, Double amount, LocalDateTime timestamp, String status) {
+    public Transfer(User sender, User receiver, Double amount) {
         this.sender = sender;
         this.receiver = receiver;
         this.amount = amount;
-        this.timestamp = timestamp;
-        this.status = status;
     }
 }

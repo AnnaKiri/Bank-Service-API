@@ -25,6 +25,12 @@ public interface UserRepository extends BaseRepository<User> {
         return save(user);
     }
 
+    default void checkExisted(int userId) {
+        if (!existsById(userId)) {
+            throw new NotFoundException("User id=" + userId + " does not exist");
+        }
+    }
+
     Optional<User> findByUsername(String username);
 
     Optional<User> findByPhone(String phone);
