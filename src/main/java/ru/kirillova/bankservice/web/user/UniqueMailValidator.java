@@ -10,7 +10,6 @@ import ru.kirillova.bankservice.HasIdAndEmail;
 import ru.kirillova.bankservice.repository.UserRepository;
 import ru.kirillova.bankservice.web.AuthUser;
 
-
 @Component
 @AllArgsConstructor
 public class UniqueMailValidator implements org.springframework.validation.Validator {

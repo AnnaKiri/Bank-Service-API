@@ -60,7 +60,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authenticationManager, UserDetailsService userDetailsService) throws Exception {
         http.authenticationManager(authenticationManager)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/profile").anonymous()
+                        .requestMatchers(HttpMethod.POST, "/users").anonymous()
                         .requestMatchers(HttpMethod.POST, "/login").anonymous()
                         .requestMatchers("/", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated()

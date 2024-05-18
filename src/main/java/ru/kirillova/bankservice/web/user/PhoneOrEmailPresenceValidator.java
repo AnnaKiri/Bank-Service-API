@@ -7,7 +7,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import ru.kirillova.bankservice.HasIdAndEmailAndPhone;
 
-
 @Component
 @AllArgsConstructor
 public class PhoneOrEmailPresenceValidator implements org.springframework.validation.Validator {

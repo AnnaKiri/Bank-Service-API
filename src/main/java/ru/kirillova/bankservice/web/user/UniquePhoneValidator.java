@@ -10,7 +10,6 @@ import ru.kirillova.bankservice.HasIdAndPhone;
 import ru.kirillova.bankservice.repository.UserRepository;
 import ru.kirillova.bankservice.web.AuthUser;
 
-
 @Component
 @AllArgsConstructor
 public class UniquePhoneValidator implements org.springframework.validation.Validator {
