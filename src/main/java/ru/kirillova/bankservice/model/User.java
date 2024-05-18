@@ -22,6 +22,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import ru.kirillova.bankservice.HasIdAndEmail;
 import ru.kirillova.bankservice.HasIdAndEmailAndPhone;
+import ru.kirillova.bankservice.HasIdAndPhone;
 import ru.kirillova.bankservice.validation.NoHtml;
 
 import java.time.LocalDate;
@@ -36,7 +37,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true)
-public class User extends AbstractBaseEntity implements HasIdAndEmail, HasIdAndEmailAndPhone {
+public class User extends AbstractBaseEntity implements HasIdAndEmail, HasIdAndEmailAndPhone, HasIdAndPhone {
 
     @NotBlank(message = "Username is required")
     @Column(nullable = false, unique = true)
@@ -49,7 +50,7 @@ public class User extends AbstractBaseEntity implements HasIdAndEmail, HasIdAndE
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    @Pattern(regexp = "^\\+?[1-9]\\d{1,14}$", message = "Invalid phone number")
+    @Pattern(regexp = "^\\+[1-9]\\d{1,14}$", message = "Invalid phone number")
     @Column(nullable = false, unique = true)
     private String phone;
 

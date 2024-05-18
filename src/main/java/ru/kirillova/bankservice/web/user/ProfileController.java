@@ -47,11 +47,14 @@ public class ProfileController {
     private BankAccountRepository bankAccountRepository;
     @Autowired
     private PhoneOrEmailPresenceValidator phoneOrEmailPresenceValidator;
+    @Autowired
+    private UniquePhoneValidator phoneValidator;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.addValidators(emailValidator);
         binder.addValidators(phoneOrEmailPresenceValidator);
+        binder.addValidators(phoneValidator);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

@@ -8,15 +8,16 @@ import lombok.Setter;
 import lombok.ToString;
 import ru.kirillova.bankservice.HasIdAndEmail;
 import ru.kirillova.bankservice.HasIdAndEmailAndPhone;
+import ru.kirillova.bankservice.HasIdAndPhone;
 import ru.kirillova.bankservice.validation.NoHtml;
 
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class UserTo extends BaseTo implements HasIdAndEmail, HasIdAndEmailAndPhone {
+public class UserTo extends BaseTo implements HasIdAndEmail, HasIdAndEmailAndPhone, HasIdAndPhone {
 
-    @Pattern(regexp = "^\\+?[1-9]\\d{1,14}$", message = "Invalid phone number")
+    @Pattern(regexp = "^\\+[1-9]\\d{1,14}$", message = "Invalid phone number")
     private String phone;
 
     @Email(message = "Email should be valid")
