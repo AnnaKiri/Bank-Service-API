@@ -29,17 +29,15 @@ public class BankAccount extends AbstractBaseEntity {
     @JsonIgnore
     private User user;
 
-    public BankAccount(Integer id, Double initialBalance, Double balance, User user) {
+    public BankAccount(Integer id, Double initialBalance, Double balance) {
         super(id);
         this.initialBalance = initialBalance;
         this.balance = balance;
-        this.user = user;
     }
 
-    public BankAccount(Double initialBalance, Double balance, User user) {
+    public BankAccount(Double initialBalance, Double balance) {
         this.initialBalance = initialBalance;
         this.balance = balance;
-        this.user = user;
     }
 
     @Override

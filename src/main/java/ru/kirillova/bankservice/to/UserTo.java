@@ -1,6 +1,7 @@
 package ru.kirillova.bankservice.to;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -49,8 +50,12 @@ public class UserTo extends BaseTo implements HasIdAndEmail, HasIdAndEmailAndPho
     @NoHtml
     private String fullName;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Schema(accessMode = Schema.AccessMode.WRITE_ONLY)
     private Double amountMoney;
+
+    public UserTo() {
+        super(null);
+    }
 
     public UserTo(Integer id, String username, String password, String phone, String email, LocalDate birthDate, String fullName, Double amountMoney) {
         super(id);

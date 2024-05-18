@@ -62,7 +62,8 @@ public class UserController extends AbstractUserController {
         User user = UsersUtil.createNewFromTo(userTo);
         User userCreated = userRepository.prepareAndSaveWithPassword(user);
 
-        BankAccount bankAccount = new BankAccount(userTo.getAmountMoney(), userTo.getAmountMoney(), userCreated);
+        BankAccount bankAccount = new BankAccount(userTo.getAmountMoney(), userTo.getAmountMoney());
+        bankAccount.setUser(userCreated);
         BankAccount bankAccountCreated = bankAccountRepository.save(bankAccount);
         userCreated.setBankAccount(bankAccountCreated);
 

@@ -1,6 +1,6 @@
 package ru.kirillova.bankservice.to;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @ToString(callSuper = true)
 public class TransferTo extends BaseTo {
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Integer senderId;
 
     @NotNull(message = "Receiver id is required")
@@ -26,11 +26,15 @@ public class TransferTo extends BaseTo {
     @Min(value = 1, message = "Amount must be more 0")
     private Double amount;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private LocalDateTime timestamp;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private String status;
+
+    public TransferTo() {
+        super(null);
+    }
 
     public TransferTo(Integer id, Integer senderId, Integer receiverId, Double amount, LocalDateTime timestamp, String status) {
         super(id);
@@ -39,5 +43,12 @@ public class TransferTo extends BaseTo {
         this.amount = amount;
         this.timestamp = timestamp;
         this.status = status;
+    }
+
+    public TransferTo(Integer id, Integer senderId, Integer receiverId, Double amount) {
+        super(id);
+        this.senderId = senderId;
+        this.receiverId = receiverId;
+        this.amount = amount;
     }
 }

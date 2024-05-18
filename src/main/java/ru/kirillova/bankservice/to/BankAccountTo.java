@@ -13,6 +13,10 @@ public class BankAccountTo extends BaseTo {
 
     private Double balance;
 
+    public BankAccountTo() {
+        super(null);
+    }
+
     public BankAccountTo(Integer id, Double balance) {
         super(id);
         this.balance = balance;

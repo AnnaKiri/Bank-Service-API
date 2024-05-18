@@ -24,6 +24,10 @@ public class UserUpdateTo extends BaseTo implements HasIdAndEmail, HasIdAndEmail
     @NoHtml
     private String email;
 
+    public UserUpdateTo() {
+        super(null);
+    }
+
     public UserUpdateTo(Integer id, String phone, String email) {
         super(id);
         this.phone = phone;

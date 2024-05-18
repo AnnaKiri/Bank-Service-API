@@ -1,4 +1,4 @@
-package ru.kirillova.bankservice.web.tranfer;
+package ru.kirillova.bankservice.web.transfer;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
