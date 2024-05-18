@@ -16,26 +16,44 @@ public class TransferService {
     private TransferRepository transferRepository;
     private UserRepository userRepository;
     private BankAccountRepository bankAccountRepository;
+    private final LockRegistry lockRegistry;
 
     @Transactional
-    public synchronized Transfer makeTransfer(Integer senderId, Integer receiverId, Double amount) {
-        Transfer transfer = new Transfer(userRepository.getReferenceById(senderId), userRepository.getReferenceById(receiverId), amount);
+    public Transfer makeTransfer(Integer senderUserId, Integer receiverUserId, Double amount) {
+        Transfer transfer = new Transfer(userRepository.getReferenceById(senderUserId), userRepository.getReferenceById(receiverUserId), amount);
 
-        BankAccount senderBankAccount = bankAccountRepository.get(senderId);
-        BankAccount receiverBankAccount = bankAccountRepository.get(receiverId);
-        if (senderBankAccount.getBalance() < amount) {
-            transfer.setStatus("FAIL");
-            transferRepository.save(transfer);
-            throw new IllegalArgumentException("Insufficient balance");
+        BankAccount senderBankAccount = bankAccountRepository.get(senderUserId);
+        BankAccount receiverBankAccount = bankAccountRepository.get(receiverUserId);
+
+        Object lock1;
+        Object lock2;
+
+        if (senderBankAccount.getId() < receiverBankAccount.getId()) {
+            lock1 = lockRegistry.getLock(senderBankAccount.getId());
+            lock2 = lockRegistry.getLock(receiverBankAccount.getId());
+        } else {
+            lock1 = lockRegistry.getLock(receiverBankAccount.getId());
+            lock2 = lockRegistry.getLock(senderBankAccount.getId());
         }
 
-        senderBankAccount.setBalance(senderBankAccount.getBalance() - amount);
-        receiverBankAccount.setBalance(receiverBankAccount.getBalance() + amount);
+        synchronized (lock1) {
+            synchronized (lock2) {
 
-        bankAccountRepository.save(receiverBankAccount);
-        bankAccountRepository.save(senderBankAccount);
+                if (senderBankAccount.getBalance() < amount) {
+                    transfer.setStatus("FAIL");
+                    transferRepository.save(transfer);
+                    throw new IllegalArgumentException("Insufficient balance");
+                }
 
-        transfer.setStatus("SUCCESS");
-        return transferRepository.save(transfer);
+                senderBankAccount.setBalance(senderBankAccount.getBalance() - amount);
+                receiverBankAccount.setBalance(receiverBankAccount.getBalance() + amount);
+
+                bankAccountRepository.save(receiverBankAccount);
+                bankAccountRepository.save(senderBankAccount);
+
+                transfer.setStatus("SUCCESS");
+                return transferRepository.save(transfer);
+            }
+        }
     }
 }
