@@ -20,9 +20,13 @@ public interface UserRepository extends BaseRepository<User> {
 
     @Transactional
     default User prepareAndSave(User user) {
-        user.setPassword(PASSWORD_ENCODER.encode(user.getPassword()));
         user.setEmail(user.getEmail().toLowerCase());
         return save(user);
+    }
+
+    default User prepareAndSaveWithPassword(User user) {
+        user.setPassword(PASSWORD_ENCODER.encode(user.getPassword()));
+        return prepareAndSave(user);
     }
 
     default void checkExisted(int userId) {

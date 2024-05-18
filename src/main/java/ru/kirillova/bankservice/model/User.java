@@ -23,6 +23,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import ru.kirillova.bankservice.HasIdAndEmail;
 import ru.kirillova.bankservice.HasIdAndEmailAndPhone;
 import ru.kirillova.bankservice.HasIdAndPhone;
+import ru.kirillova.bankservice.HasIdAndUsername;
 import ru.kirillova.bankservice.validation.NoHtml;
 
 import java.time.LocalDate;
@@ -37,7 +38,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true)
-public class User extends AbstractBaseEntity implements HasIdAndEmail, HasIdAndEmailAndPhone, HasIdAndPhone {
+public class User extends AbstractBaseEntity implements HasIdAndEmail, HasIdAndEmailAndPhone, HasIdAndPhone, HasIdAndUsername {
 
     @NotBlank(message = "Username is required")
     @Column(nullable = false, unique = true)
@@ -74,7 +75,7 @@ public class User extends AbstractBaseEntity implements HasIdAndEmail, HasIdAndE
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private BankAccount bankAccount;
 
-    public User(Integer id, String username, String password, String phone, String email, LocalDate birthDate, String fullName, BankAccount bankAccount) {
+    public User(Integer id, String username, String password, String phone, String email, LocalDate birthDate, String fullName) {
         super(id);
         this.username = username;
         this.password = password;
@@ -82,16 +83,14 @@ public class User extends AbstractBaseEntity implements HasIdAndEmail, HasIdAndE
         this.email = email;
         this.birthDate = birthDate;
         this.fullName = fullName;
-        this.bankAccount = bankAccount;
     }
 
-    public User(String username, String password, String phone, String email, LocalDate birthDate, String fullName, BankAccount bankAccount) {
+    public User(String username, String password, String phone, String email, LocalDate birthDate, String fullName) {
         this.username = username;
         this.password = password;
         this.phone = phone;
         this.email = email;
         this.birthDate = birthDate;
         this.fullName = fullName;
-        this.bankAccount = bankAccount;
     }
 }

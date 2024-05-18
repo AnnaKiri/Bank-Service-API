@@ -22,9 +22,9 @@ import org.springframework.context.annotation.Configuration;
                 description = """
                         Restaurant Voting application
                         <p><b>Test credentials:</b><br>
-                        - user1@example.com / password1<br>
-                        - user2@example.com / password2<br>
-                        - user3@example.com / password3</p>
+                        - user1 / password1<br>
+                        - user2 / password2<br>
+                        - user3 / password3</p>
                         """
         ),
         security = @SecurityRequirement(name = "basicAuth")

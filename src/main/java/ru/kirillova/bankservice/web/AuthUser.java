@@ -16,7 +16,7 @@ public class AuthUser extends org.springframework.security.core.userdetails.User
     private final User user;
 
     public AuthUser(@NonNull User user) {
-        super(user.getEmail(), user.getPassword(), Collections.EMPTY_LIST);
+        super(user.getUsername(), user.getPassword(), Collections.EMPTY_LIST);
         this.user = user;
     }
 
@@ -42,6 +42,6 @@ public class AuthUser extends org.springframework.security.core.userdetails.User
 
     @Override
     public String toString() {
-        return "AuthUser:" + user.getId() + '[' + user.getEmail() + ']';
+        return "AuthUser:" + user.getId() + '[' + user.getUsername() + ']';
     }
 }

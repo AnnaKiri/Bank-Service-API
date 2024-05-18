@@ -38,11 +38,11 @@ public class SecurityConfig {
 
     @Bean
     UserDetailsService userDetailsService() {
-        return email -> {
-            log.debug("Authenticating '{}'", email);
-            Optional<User> optionalUser = userRepository.findByEmailIgnoreCase(email);
+        return username -> {
+            log.debug("Authenticating '{}'", username);
+            Optional<User> optionalUser = userRepository.findByUsername(username);
             return new AuthUser(optionalUser.orElseThrow(
-                    () -> new UsernameNotFoundException("User '" + email + "' was not found")));
+                    () -> new UsernameNotFoundException("User '" + username + "' was not found")));
         };
     }
 

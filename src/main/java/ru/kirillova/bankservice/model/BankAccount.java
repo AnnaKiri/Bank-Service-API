@@ -1,5 +1,6 @@
 package ru.kirillova.bankservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -31,6 +32,7 @@ public class BankAccount extends AbstractBaseEntity {
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    @JsonIgnore
     private User user;
 
     public BankAccount(Integer id, Double initialBalance, Double balance, User user) {
