@@ -20,6 +20,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import ru.kirillova.bankservice.HasIdAndEmail;
 
 import java.time.LocalDate;
 
@@ -33,7 +34,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true)
-public class User extends AbstractBaseEntity {
+public class User extends AbstractBaseEntity implements HasIdAndEmail {
 
     @NotBlank(message = "Username is required")
     @Column(nullable = false, unique = true)
