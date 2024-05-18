@@ -6,8 +6,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,14 +18,10 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BankAccount extends AbstractBaseEntity {
 
-    @NotNull(message = "Initial balance is required")
     @Column(nullable = false)
-    @Min(value = 0, message = "Balance must be positive")
     private Double initialBalance;
 
-    @NotNull(message = "Balance is required")
     @Column(nullable = false)
-    @Min(value = 0, message = "Balance must be positive")
     private Double balance;
 
     @OneToOne

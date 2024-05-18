@@ -1,5 +1,6 @@
 package ru.kirillova.bankservice.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Transactional(readOnly = true)
-public interface TransferRepository extends BaseRepository<Transfer> {
+public interface TransferRepository extends JpaRepository<Transfer, Integer> {
     @Query("SELECT t FROM Transfer t WHERE t.id = :transferId and t.sender.id = :userId")
     Optional<Transfer> get(int userId, int transferId);
 

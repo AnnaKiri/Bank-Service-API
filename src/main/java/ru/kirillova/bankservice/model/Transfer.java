@@ -6,9 +6,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,25 +22,18 @@ public class Transfer extends AbstractBaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sender_id", nullable = false)
-    @NotNull(message = "Sender is required")
     private User sender;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "receiver_id", nullable = false)
-    @NotNull(message = "Receiver is required")
     private User receiver;
 
-    @NotNull(message = "Amount is required")
-    @Min(value = 1, message = "Amount must be more 0")
     @Column(nullable = false)
     private Double amount;
 
-    @NotNull(message = "Timestamp is required")
     @Column(nullable = false)
     private LocalDateTime timestamp = LocalDateTime.now();
 
-    @NotNull(message = "Status is required")
-    @Size(max = 20, message = "Status must be less than or equal to 20 characters")
     @Column(nullable = false)
     private String status;
 

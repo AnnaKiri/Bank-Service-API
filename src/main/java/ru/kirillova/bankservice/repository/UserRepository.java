@@ -1,24 +1,20 @@
 package ru.kirillova.bankservice.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kirillova.bankservice.error.NotFoundException;
 import ru.kirillova.bankservice.model.User;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 import static ru.kirillova.bankservice.config.SecurityConfig.PASSWORD_ENCODER;
 
 @Transactional(readOnly = true)
-public interface UserRepository extends BaseRepository<User>, JpaSpecificationExecutor<User> {
+public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecificationExecutor<User> {
     @Query("SELECT u FROM User u WHERE u.email = LOWER(:email)")
     Optional<User> findByEmailIgnoreCase(String email);
-
-    default User getExistedByEmail(String email) {
-        return findByEmailIgnoreCase(email).orElseThrow(() -> new NotFoundException("User with email=" + email + " not found"));
-    }
 
     @Transactional
     default User prepareAndSave(User user) {
@@ -40,9 +36,4 @@ public interface UserRepository extends BaseRepository<User>, JpaSpecificationEx
     Optional<User> findByUsername(String username);
 
     Optional<User> findByPhone(String phone);
-
-    Optional<User> findByEmail(String email);
-
-    @Query("SELECT u FROM User u WHERE u.birthDate > :birthday")
-    Optional<User> findByBirthday(LocalDate birthday);
 }

@@ -1,5 +1,6 @@
 package ru.kirillova.bankservice.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,9 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Transactional(readOnly = true)
-public interface BankAccountRepository extends BaseRepository<BankAccount> {
-    Optional<BankAccount> findByUserId(Integer userId);
-
+public interface BankAccountRepository extends JpaRepository<BankAccount, Integer> {
     @Query("SELECT b FROM BankAccount b WHERE b.id = :bankAccountId and b.user.id = :userId")
     Optional<BankAccount> get(int userId, int bankAccountId);
 

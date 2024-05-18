@@ -1,6 +1,7 @@
 package ru.kirillova.bankservice.service;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kirillova.bankservice.model.BankAccount;
@@ -11,6 +12,7 @@ import ru.kirillova.bankservice.repository.UserRepository;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class TransferService {
 
     private final TransferRepository transferRepository;
@@ -21,6 +23,8 @@ public class TransferService {
 
     @Transactional
     public Transfer makeTransfer(Integer senderUserId, Integer receiverUserId, Double amount) {
+        log.info("Initiating transfer from user {} to user {} with amount {}", senderUserId, receiverUserId, amount);
+
         Transfer transfer = new Transfer(userRepository.getReferenceById(senderUserId),
                 userRepository.getReferenceById(receiverUserId),
                 amount);
@@ -28,6 +32,7 @@ public class TransferService {
         if (senderUserId.equals(receiverUserId)) {
             transfer.setStatus("FAIL");
             transferSaveService.saveTransferWithNewTransaction(transfer);
+            log.error("Transfer failed: You can't transfer to yourself");
             throw new IllegalArgumentException("You can't transfer to yourself");
         }
 
@@ -50,9 +55,11 @@ public class TransferService {
                 if (senderBankAccount.getBalance() < amount) {
                     transfer.setStatus("FAIL");
                     transferSaveService.saveTransferWithNewTransaction(transfer);
+                    log.error("Transfer failed: Insufficient balance for user {}", senderUserId);
                     throw new IllegalArgumentException("Insufficient balance");
                 }
 
+                log.info("Processing transfer: deducting amount from sender and adding to receiver");
                 senderBankAccount.setBalance(senderBankAccount.getBalance() - amount);
                 receiverBankAccount.setBalance(receiverBankAccount.getBalance() + amount);
 
@@ -60,7 +67,9 @@ public class TransferService {
                 bankAccountRepository.save(senderBankAccount);
 
                 transfer.setStatus("SUCCESS");
-                return transferRepository.save(transfer);
+                Transfer savedTransfer = transferRepository.save(transfer);
+                log.info("Transfer successful: {}", savedTransfer);
+                return savedTransfer;
             }
         }
     }
