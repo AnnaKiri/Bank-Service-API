@@ -25,6 +25,12 @@ public class TransferService {
                 userRepository.getReferenceById(receiverUserId),
                 amount);
 
+        if (senderUserId.equals(receiverUserId)) {
+            transfer.setStatus("FAIL");
+            transferSaveService.saveTransferWithNewTransaction(transfer);
+            throw new IllegalArgumentException("You can't transfer to yourself");
+        }
+
         BankAccount senderBankAccount = bankAccountRepository.get(senderUserId);
         BankAccount receiverBankAccount = bankAccountRepository.get(receiverUserId);
 

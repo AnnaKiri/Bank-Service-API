@@ -34,7 +34,7 @@ public class Transfer extends AbstractBaseEntity {
     private User receiver;
 
     @NotNull(message = "Amount is required")
-    @Min(value = 0, message = "Amount must be positive")
+    @Min(value = 1, message = "Amount must be more 0")
     @Column(nullable = false)
     private Double amount;
 

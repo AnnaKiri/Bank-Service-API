@@ -23,7 +23,7 @@ public class TransferTo extends BaseTo {
     private Integer receiverId;
 
     @NotNull(message = "Amount is required")
-    @Min(value = 0, message = "Amount must be positive")
+    @Min(value = 1, message = "Amount must be more 0")
     private Double amount;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
