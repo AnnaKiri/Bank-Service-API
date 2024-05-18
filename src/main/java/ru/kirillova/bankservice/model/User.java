@@ -21,6 +21,7 @@ import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import ru.kirillova.bankservice.HasIdAndEmail;
+import ru.kirillova.bankservice.HasIdAndEmailAndPhone;
 import ru.kirillova.bankservice.validation.NoHtml;
 
 import java.time.LocalDate;
@@ -35,7 +36,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true)
-public class User extends AbstractBaseEntity implements HasIdAndEmail {
+public class User extends AbstractBaseEntity implements HasIdAndEmail, HasIdAndEmailAndPhone {
 
     @NotBlank(message = "Username is required")
     @Column(nullable = false, unique = true)
@@ -53,7 +54,6 @@ public class User extends AbstractBaseEntity implements HasIdAndEmail {
     private String phone;
 
     @Email(message = "Email should be valid")
-    @NotBlank(message = "Email is required")
     @Column(nullable = false, unique = true)
     @NoHtml
     private String email;
@@ -70,6 +70,7 @@ public class User extends AbstractBaseEntity implements HasIdAndEmail {
 
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private BankAccount bankAccount;
 
     public User(Integer id, String username, String password, String phone, String email, LocalDate birthDate, String fullName, BankAccount bankAccount) {

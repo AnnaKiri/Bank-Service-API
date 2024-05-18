@@ -16,7 +16,7 @@ public class InterestAccrualService {
     private final LockRegistry lockRegistry;
 
     @Transactional
-    public void accrueInterestOneAccount(Integer id, Double minuteInterestRate, Double maxInterestRate) {
+    protected void accrueInterestOneAccount(Integer id, Double minuteInterestRate, Double maxInterestRate) {
         Object lock = lockRegistry.getLock(id);
         synchronized (lock) {
             Optional<BankAccount> bankAccount = bankAccountRepository.findById(id);

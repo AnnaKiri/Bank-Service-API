@@ -26,7 +26,7 @@ public class UniqueMailValidator implements org.springframework.validation.Valid
 
     @Override
     public void validate(@NonNull Object target, @NonNull Errors errors) {
-        HasIdAndEmail user = ((HasIdAndEmail) target);
+        HasIdAndEmail user = (HasIdAndEmail) target;
         if (StringUtils.hasText(user.getEmail())) {
             repository.findByEmailIgnoreCase(user.getEmail())
                     .ifPresent(dbUser -> {

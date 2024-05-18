@@ -45,10 +45,13 @@ public class ProfileController {
     private UniqueMailValidator emailValidator;
     @Autowired
     private BankAccountRepository bankAccountRepository;
+    @Autowired
+    private PhoneOrEmailPresenceValidator phoneOrEmailPresenceValidator;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.addValidators(emailValidator);
+        binder.addValidators(phoneOrEmailPresenceValidator);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
