@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS bank_accounts;
-DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS transfers;
+DROP TABLE IF EXISTS users;
 
 CREATE TABLE users
 (
