@@ -8,7 +8,6 @@ import org.springframework.validation.Errors;
 import ru.kirillova.bankservice.HasIdAndUsername;
 import ru.kirillova.bankservice.repository.UserRepository;
 
-
 @Component
 @AllArgsConstructor
 public class UniqueUsernameValidator implements org.springframework.validation.Validator {

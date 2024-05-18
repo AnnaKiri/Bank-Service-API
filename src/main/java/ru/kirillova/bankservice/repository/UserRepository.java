@@ -18,7 +18,7 @@ public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecifi
 
     @Transactional
     default User prepareAndSave(User user) {
-        user.setEmail(user.getEmail().toLowerCase());
+        user.setEmail(user.getEmail() != null ? user.getEmail().toLowerCase() : null);
         return save(user);
     }
 

@@ -13,8 +13,8 @@ public class UsersUtil {
     }
 
     public static User updateFromTo(User user, UserUpdateTo userUpdateTo) {
-        user.setEmail(userUpdateTo.getEmail().toLowerCase());
-        user.setPhone(userUpdateTo.getPhone());
+        user.setEmail(userUpdateTo.getEmail() != null ? userUpdateTo.getEmail().toLowerCase() : null);
+        user.setPhone(userUpdateTo.getPhone() != null ? userUpdateTo.getPhone() : null);
         return user;
     }
 }
