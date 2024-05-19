@@ -34,3 +34,4 @@ build/
 .vscode/
 /src/main/resources/db/db-config.yaml
 /src/main/resources/jwt-config.yaml
+/.mvn/
