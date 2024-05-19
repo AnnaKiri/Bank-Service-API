@@ -14,6 +14,9 @@ import ru.kirillova.bankservice.repository.UserRepository;
 @AllArgsConstructor
 @Slf4j
 public class TransferService {
+    public static final String TRANSFER_TO_YOURSELF_ERROR = "You can't transfer to yourself";
+    public static final String NEGATIVE_AMOUNT_OF_TRANSFER = "You can't transfer negative amount of money";
+    public static final String INSUFFICIENT_BALANCE = "Insufficient balance";
 
     private final TransferRepository transferRepository;
     private final UserRepository userRepository;
@@ -30,10 +33,11 @@ public class TransferService {
                 amount);
 
         if (senderUserId.equals(receiverUserId)) {
-            transfer.setStatus("FAIL");
-            transferSaveService.saveTransferWithNewTransaction(transfer);
-            log.error("Transfer failed: You can't transfer to yourself");
-            throw new IllegalArgumentException("You can't transfer to yourself");
+            logBadCase(TRANSFER_TO_YOURSELF_ERROR, transfer);
+        }
+
+        if (amount < 0) {
+            logBadCase(NEGATIVE_AMOUNT_OF_TRANSFER, transfer);
         }
 
         BankAccount senderBankAccount = bankAccountRepository.getByUserId(senderUserId);
@@ -53,10 +57,7 @@ public class TransferService {
         synchronized (lock1) {
             synchronized (lock2) {
                 if (senderBankAccount.getBalance() < amount) {
-                    transfer.setStatus("FAIL");
-                    transferSaveService.saveTransferWithNewTransaction(transfer);
-                    log.error("Transfer failed: Insufficient balance for user {}", senderUserId);
-                    throw new IllegalArgumentException("Insufficient balance");
+                    logBadCase(INSUFFICIENT_BALANCE, transfer);
                 }
 
                 log.info("Processing transfer: deducting amount from sender and adding to receiver");
@@ -72,5 +73,12 @@ public class TransferService {
                 return savedTransfer;
             }
         }
+    }
+
+    private void logBadCase(String message, Transfer transfer) throws IllegalArgumentException {
+        transfer.setStatus("FAIL");
+        transferSaveService.saveTransferWithNewTransaction(transfer);
+        log.error("Transfer failed: {}", message);
+        throw new IllegalArgumentException(message);
     }
 }

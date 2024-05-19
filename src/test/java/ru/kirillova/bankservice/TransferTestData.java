@@ -1,5 +1,6 @@
 package ru.kirillova.bankservice;
 
+import ru.kirillova.bankservice.model.Transfer;
 import ru.kirillova.bankservice.to.TransferTo;
 
 import java.time.LocalDateTime;
@@ -14,13 +15,15 @@ public class TransferTestData {
     public static final int TRANSFER1_ID = 1;
     public static final int NOT_FOUND = 100;
 
-    public static final MatcherFactory.Matcher<TransferTo> TRANSFER_TO_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(TransferTo.class, "timestamp");
+    public static final MatcherFactory.Matcher<Transfer> TRANSFER_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Transfer.class, "id", "timestamp", "sender", "receiver");
+    public static final MatcherFactory.Matcher<TransferTo> TRANSFER_TO_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(TransferTo.class, "id", "timestamp");
 
-    public static final TransferTo transfer1 = new TransferTo(TRANSFER1_ID, user1.getId(), user2.getId(), 100.0, LocalDateTime.now(), "SUCCESS");
-    public static final TransferTo transfer2 = new TransferTo(TRANSFER1_ID + 1, user3.getId(), user1.getId(), 200.0, LocalDateTime.now(), "SUCCESS");
-    public static final TransferTo transfer3 = new TransferTo(TRANSFER1_ID + 2, user2.getId(), user3.getId(), 300.0, LocalDateTime.now(), "SUCCESS");
-    public static final TransferTo transfer4 = new TransferTo(TRANSFER1_ID + 3, user2.getId(), user2.getId(), 100.0, LocalDateTime.now(), "FAIL");
-    public static final TransferTo transfer5 = new TransferTo(TRANSFER1_ID + 4, user1.getId(), user2.getId(), 100000.0, LocalDateTime.now(), "FAIL");
+    public static final Transfer transfer1 = new Transfer(TRANSFER1_ID, user1, user2, 100.0, LocalDateTime.now(), "SUCCESS");
+    public static final Transfer transfer2 = new Transfer(TRANSFER1_ID + 1, user3, user1, 200.0, LocalDateTime.now(), "SUCCESS");
+    public static final Transfer transfer3 = new Transfer(TRANSFER1_ID + 2, user2, user3, 300.0, LocalDateTime.now(), "SUCCESS");
+    public static final Transfer transfer4 = new Transfer(TRANSFER1_ID + 3, user2, user2, 100.0, LocalDateTime.now(), "FAIL");
+    public static final Transfer transfer5 = new Transfer(TRANSFER1_ID + 4, user1, user2, 100000.0, LocalDateTime.now(), "FAIL");
+    public static final Transfer transfer6 = new Transfer(TRANSFER1_ID + 5, user3, user1, -100.0, LocalDateTime.now(), "FAIL");
 
 
     public static TransferTo getNew() {

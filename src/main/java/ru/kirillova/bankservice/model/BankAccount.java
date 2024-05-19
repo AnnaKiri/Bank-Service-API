@@ -46,7 +46,7 @@ public class BankAccount extends AbstractBaseEntity {
                 "id=" + id +
                 ", initialBalance=" + initialBalance +
                 ", balance=" + balance +
-                ", user=" + user.getId() +
+                ", user=" + (user != null ? user.getId() : null) +
                 '}';
     }
 }

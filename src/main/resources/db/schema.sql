@@ -27,7 +27,7 @@ CREATE TABLE transfers
     id          INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     sender_id   INTEGER                             NOT NULL,
     receiver_id INTEGER                             NOT NULL,
-    amount      DOUBLE PRECISION                    NOT NULL CHECK (amount >= 0),
+    amount      DOUBLE PRECISION                    NOT NULL,
     timestamp   TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     status      VARCHAR(20)                         NOT NULL,
     FOREIGN KEY (sender_id) REFERENCES users (id) ON DELETE CASCADE,

@@ -13,6 +13,8 @@ VALUES ((SELECT id FROM users WHERE username = 'user1'), (SELECT id FROM users W
        ((SELECT id FROM users WHERE username = 'user2'), (SELECT id FROM users WHERE username = 'user2'), 100.0,
         'FAIL'),
        ((SELECT id FROM users WHERE username = 'user1'), (SELECT id FROM users WHERE username = 'user2'), 100000.0,
+        'FAIL'),
+       ((SELECT id FROM users WHERE username = 'user3'), (SELECT id FROM users WHERE username = 'user1'), -100.0,
         'FAIL');
 
 INSERT INTO bank_accounts (initial_balance, balance, user_id)
