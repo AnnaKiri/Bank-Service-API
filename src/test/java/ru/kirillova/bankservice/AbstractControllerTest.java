@@ -15,9 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static ru.kirillova.bankservice.web.user.UserTestData.user1;
-import static ru.kirillova.bankservice.web.user.UserTestData.user2;
-import static ru.kirillova.bankservice.web.user.UserTestData.user3;
+import static ru.kirillova.bankservice.UserTestData.user1;
+import static ru.kirillova.bankservice.UserTestData.user2;
+import static ru.kirillova.bankservice.UserTestData.user3;
 
 @SpringBootTest
 @Transactional

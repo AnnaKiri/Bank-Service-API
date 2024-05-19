@@ -1,6 +1,5 @@
-package ru.kirillova.bankservice.web.user;
+package ru.kirillova.bankservice;
 
-import ru.kirillova.bankservice.MatcherFactory;
 import ru.kirillova.bankservice.model.User;
 import ru.kirillova.bankservice.util.JsonUtil;
 

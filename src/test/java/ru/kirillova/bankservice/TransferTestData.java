@@ -1,13 +1,12 @@
-package ru.kirillova.bankservice.web.transfer;
+package ru.kirillova.bankservice;
 
-import ru.kirillova.bankservice.MatcherFactory;
 import ru.kirillova.bankservice.to.TransferTo;
 
 import java.time.LocalDateTime;
 
-import static ru.kirillova.bankservice.web.user.UserTestData.user1;
-import static ru.kirillova.bankservice.web.user.UserTestData.user2;
-import static ru.kirillova.bankservice.web.user.UserTestData.user3;
+import static ru.kirillova.bankservice.UserTestData.user1;
+import static ru.kirillova.bankservice.UserTestData.user2;
+import static ru.kirillova.bankservice.UserTestData.user3;
 
 
 public class TransferTestData {

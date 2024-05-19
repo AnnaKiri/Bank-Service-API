@@ -9,10 +9,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.kirillova.bankservice.web.transfer.ProfileTransferController.REST_URL;
-import static ru.kirillova.bankservice.web.transfer.TransferTestData.TRANSFER1_ID;
-import static ru.kirillova.bankservice.web.transfer.TransferTestData.TRANSFER_TO_MATCHER;
-import static ru.kirillova.bankservice.web.transfer.TransferTestData.transfer1;
-import static ru.kirillova.bankservice.web.user.UserTestData.user1;
+import static ru.kirillova.bankservice.TransferTestData.TRANSFER1_ID;
+import static ru.kirillova.bankservice.TransferTestData.TRANSFER_TO_MATCHER;
+import static ru.kirillova.bankservice.TransferTestData.transfer1;
+import static ru.kirillova.bankservice.UserTestData.user1;
 
 class ProfileTransferControllerTest extends AbstractControllerTest {
 

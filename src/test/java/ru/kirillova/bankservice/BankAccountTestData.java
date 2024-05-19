@@ -1,6 +1,5 @@
-package ru.kirillova.bankservice.web.bankaccount;
+package ru.kirillova.bankservice;
 
-import ru.kirillova.bankservice.MatcherFactory;
 import ru.kirillova.bankservice.model.BankAccount;
 
 public class BankAccountTestData {
