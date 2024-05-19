@@ -13,7 +13,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import ru.kirillova.bankservice.HasIdAndEmail;
-import ru.kirillova.bankservice.HasIdAndEmailAndPhone;
 import ru.kirillova.bankservice.HasIdAndPhone;
 import ru.kirillova.bankservice.HasIdAndUsername;
 import ru.kirillova.bankservice.validation.NoHtml;
@@ -24,7 +23,7 @@ import java.time.LocalDate;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class UserTo extends BaseTo implements HasIdAndEmail, HasIdAndEmailAndPhone, HasIdAndPhone, HasIdAndUsername {
+public class UserTo extends BaseTo implements HasIdAndEmail, HasIdAndPhone, HasIdAndUsername {
 
     @NotBlank(message = "Username is required")
     @NoHtml

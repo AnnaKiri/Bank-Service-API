@@ -15,7 +15,6 @@ import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import ru.kirillova.bankservice.HasIdAndEmail;
-import ru.kirillova.bankservice.HasIdAndEmailAndPhone;
 import ru.kirillova.bankservice.HasIdAndPhone;
 import ru.kirillova.bankservice.HasIdAndUsername;
 
@@ -31,7 +30,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true)
-public class User extends AbstractBaseEntity implements HasIdAndEmail, HasIdAndEmailAndPhone, HasIdAndPhone, HasIdAndUsername {
+public class User extends AbstractBaseEntity implements HasIdAndEmail, HasIdAndPhone, HasIdAndUsername {
 
     @Column(nullable = false, unique = true)
     private String username;
