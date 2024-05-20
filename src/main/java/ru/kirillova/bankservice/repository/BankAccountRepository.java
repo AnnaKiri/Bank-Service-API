@@ -16,7 +16,7 @@ public interface BankAccountRepository extends JpaRepository<BankAccount, Intege
     Optional<BankAccount> get(int userId, int bankAccountId);
 
     @Query("SELECT b FROM BankAccount b WHERE b.user.id= :userId")
-    List<BankAccount> getAllByUser(@Param("userId") int userId);
+    List<BankAccount> getAllByUser(int userId);
 
     default BankAccount getBelonged(int userId, int bankAccountId) {
         return get(userId, bankAccountId).orElseThrow(

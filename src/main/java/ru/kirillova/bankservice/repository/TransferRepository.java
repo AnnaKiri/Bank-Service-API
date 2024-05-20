@@ -16,7 +16,7 @@ public interface TransferRepository extends JpaRepository<Transfer, Integer> {
     Optional<Transfer> get(int userId, int transferId);
 
     @Query("SELECT t FROM Transfer t WHERE t.sender.id= :userId")
-    List<Transfer> getAllByUser(@Param("userId") int userId);
+    List<Transfer> getAllByUser(int userId);
 
     default Transfer getBelonged(int userId, int transferId) {
         return get(userId, transferId).orElseThrow(

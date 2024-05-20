@@ -2,8 +2,6 @@ package ru.kirillova.bankservice.web;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.kirillova.bankservice.security.JWTProvider;
+import ru.kirillova.bankservice.to.AuthResponseTo;
+import ru.kirillova.bankservice.to.LoginRequestTo;
 
 @RestController
 @Slf4j
@@ -25,34 +25,16 @@ public class AuthController {
     private JWTProvider jwtProvider;
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticate(@RequestBody LoginRequest loginRequest) {
+    public AuthResponseTo authenticate(@RequestBody LoginRequestTo loginRequest) {
         log.info("Attempt to login by user: {}", loginRequest.getUsername());
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
-            );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            String jwt = jwtProvider.createToken(loginRequest.getUsername());
-            log.info("Login successful for user: {}", loginRequest.getUsername());
-            return ResponseEntity.ok(new AuthResponse(jwt));
-        } catch (Exception e) {
-            log.error("Login failed for user: {}", loginRequest.getUsername(), e);
-            return ResponseEntity.badRequest().body("Authentication failed");
-        }
-    }
+        String jwt = jwtProvider.createToken(loginRequest.getUsername());
+        log.info("Login successful for user: {}", loginRequest.getUsername());
+        return new AuthResponseTo(jwt);
 
-    @Setter
-    @Getter
-    public static class LoginRequest {
-        private String username;
-        private String password;
-    }
-
-    @Setter
-    @Getter
-    @AllArgsConstructor
-    public static class AuthResponse {
-        private String token;
     }
 }

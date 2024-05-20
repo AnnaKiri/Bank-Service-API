@@ -1,5 +1,5 @@
 package ru.kirillova.bankservice;
 
-public interface HasIdAndUsername extends HasId {
+public interface HasUsername {
     String getUsername();
 }

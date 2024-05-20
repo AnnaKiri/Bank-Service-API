@@ -5,7 +5,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
-import ru.kirillova.bankservice.HasIdAndUsername;
+import ru.kirillova.bankservice.HasUsername;
 import ru.kirillova.bankservice.repository.UserRepository;
 
 @Component
@@ -17,12 +17,12 @@ public class UniqueUsernameValidator implements org.springframework.validation.V
 
     @Override
     public boolean supports(@NonNull Class<?> clazz) {
-        return HasIdAndUsername.class.isAssignableFrom(clazz);
+        return HasUsername.class.isAssignableFrom(clazz);
     }
 
     @Override
     public void validate(@NonNull Object target, @NonNull Errors errors) {
-        HasIdAndUsername user = (HasIdAndUsername) target;
+        HasUsername user = (HasUsername) target;
         if (StringUtils.hasText(user.getUsername())) {
             repository.findByUsername(user.getUsername())
                     .ifPresent(dbUser -> errors.rejectValue("username", "", EXCEPTION_DUPLICATE_USERNAME));
