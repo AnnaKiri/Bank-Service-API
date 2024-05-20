@@ -32,7 +32,7 @@ public class BankAccountService {
 
     @Transactional
     public BankAccount prepareAndSave(BankAccount bankAccount) {
-        Double maxBalanceWithInterest = bankAccount.getBalance() * MAX_INTEREST_RATE_PROC / 100;
+        Double maxBalanceWithInterest = bankAccount.getBalance() * (1.0 + MAX_INTEREST_RATE_PROC / 100);
         bankAccount.setMaxBalanceWithInterest(maxBalanceWithInterest);
         return bankAccountRepository.save(bankAccount);
     }
