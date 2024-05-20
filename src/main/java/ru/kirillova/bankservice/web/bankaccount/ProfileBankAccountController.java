@@ -22,7 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 @SecurityRequirement(name = "Bearer Authentication")
 public class ProfileBankAccountController {
-    static final String REST_URL = "/profile/bankaccounts";
+    static final String REST_URL = "/profile/bank-accounts";
 
     private BankAccountRepository bankAccountRepository;
 

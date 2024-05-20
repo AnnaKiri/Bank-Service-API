@@ -15,8 +15,8 @@ import ru.kirillova.bankservice.repository.UserRepository;
 @Slf4j
 public class TransferService {
     public static final String TRANSFER_TO_YOURSELF_ERROR = "You can't transfer to yourself";
-    public static final String NEGATIVE_AMOUNT_OF_TRANSFER = "You can't transfer negative amount of money";
-    public static final String INSUFFICIENT_BALANCE = "Insufficient balance";
+    public static final String NEGATIVE_AMOUNT_OF_TRANSFER_ERROR = "You can't transfer negative amount of money";
+    public static final String INSUFFICIENT_BALANCE_ERROR = "Insufficient balance";
 
     private final TransferRepository transferRepository;
     private final UserRepository userRepository;
@@ -37,7 +37,7 @@ public class TransferService {
         }
 
         if (amount < 0) {
-            logBadCase(NEGATIVE_AMOUNT_OF_TRANSFER, transfer);
+            logBadCase(NEGATIVE_AMOUNT_OF_TRANSFER_ERROR, transfer);
         }
 
         BankAccount senderBankAccount = bankAccountRepository.getByUserId(senderUserId);
@@ -57,7 +57,7 @@ public class TransferService {
         synchronized (lock1) {
             synchronized (lock2) {
                 if (senderBankAccount.getBalance() < amount) {
-                    logBadCase(INSUFFICIENT_BALANCE, transfer);
+                    logBadCase(INSUFFICIENT_BALANCE_ERROR, transfer);
                 }
 
                 log.info("Processing transfer: deducting amount from sender and adding to receiver");

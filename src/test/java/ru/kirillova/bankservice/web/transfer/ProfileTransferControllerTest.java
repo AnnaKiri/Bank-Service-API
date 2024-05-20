@@ -45,7 +45,7 @@ import static ru.kirillova.bankservice.UserTestData.USER1_ID;
 import static ru.kirillova.bankservice.UserTestData.user1;
 import static ru.kirillova.bankservice.UserTestData.user2;
 import static ru.kirillova.bankservice.UserTestData.user3;
-import static ru.kirillova.bankservice.service.TransferService.INSUFFICIENT_BALANCE;
+import static ru.kirillova.bankservice.service.TransferService.INSUFFICIENT_BALANCE_ERROR;
 import static ru.kirillova.bankservice.service.TransferService.TRANSFER_TO_YOURSELF_ERROR;
 import static ru.kirillova.bankservice.web.transfer.ProfileTransferController.REST_URL;
 
@@ -189,7 +189,7 @@ class ProfileTransferControllerTest {
                 .content(JsonUtil.writeValue(newTo)))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity())
-                .andExpect(content().string(containsString(INSUFFICIENT_BALANCE)));
+                .andExpect(content().string(containsString(INSUFFICIENT_BALANCE_ERROR)));
     }
 
     @Test

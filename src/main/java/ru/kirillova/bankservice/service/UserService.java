@@ -1,7 +1,7 @@
 package ru.kirillova.bankservice.service;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -14,9 +14,9 @@ import java.time.LocalDate;
 
 @Service
 @Slf4j
+@AllArgsConstructor
 public class UserService {
 
-    @Autowired
     private UserRepository userRepository;
 
     public Page<User> searchUsers(LocalDate birthDate, String phone, String fullName, String email, Pageable pageable) {
