@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.kirillova.bankservice.model.BankAccount;
 import ru.kirillova.bankservice.repository.BankAccountRepository;
 
@@ -20,13 +21,19 @@ public class BankAccountService {
     private final InterestAccrualService interestAccrualService;
 
     @Scheduled(cron = "0 * * * * *")
-    private void accrueInterest() {
+    protected void accrueInterest() {
         List<BankAccount> accounts = bankAccountRepository.findAll();
         Double minuteInterestRate = MINUTE_INTEREST_RATE_PROC / 100;
-        Double maxInterestRate = MAX_INTEREST_RATE_PROC / 100;
         log.info("Accrued interest for {} accounts", accounts.size());
         for (BankAccount account : accounts) {
-            interestAccrualService.accrueInterestOneAccount(account.getId(), minuteInterestRate, maxInterestRate);
+            interestAccrualService.accrueInterestOneAccount(account.getId(), minuteInterestRate);
         }
+    }
+
+    @Transactional
+    public BankAccount prepareAndSave(BankAccount bankAccount) {
+        Double maxBalanceWithInterest = bankAccount.getBalance() * MAX_INTEREST_RATE_PROC / 100;
+        bankAccount.setMaxBalanceWithInterest(maxBalanceWithInterest);
+        return bankAccountRepository.save(bankAccount);
     }
 }

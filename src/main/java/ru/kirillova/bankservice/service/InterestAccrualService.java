@@ -18,7 +18,7 @@ public class InterestAccrualService {
     private final LockRegistry lockRegistry;
 
     @Transactional
-    protected void accrueInterestOneAccount(Integer id, Double minuteInterestRate, Double maxInterestRate) {
+    protected void accrueInterestOneAccount(Integer id, Double minuteInterestRate) {
         log.info("Starting interest accrual for account id={}", id);
         Object lock = lockRegistry.getLock(id);
         synchronized (lock) {
@@ -30,14 +30,18 @@ public class InterestAccrualService {
 
             BankAccount account = bankAccountOpt.get();
             Double currentBalance = account.getBalance();
-            Double balanceWithInterest = currentBalance + currentBalance * minuteInterestRate;
-            Double diffWithInitialBalance = balanceWithInterest - account.getInitialBalance();
-            Double maxIncreasingByInterest = account.getInitialBalance() * maxInterestRate;
-            Double increasingAllowed = Math.max(maxIncreasingByInterest - diffWithInitialBalance, 0.0);
-            Double newBalance = Math.min(balanceWithInterest, currentBalance + increasingAllowed);
+            Double maxBalanceWithInterest = account.getMaxBalanceWithInterest();
 
-            log.info("Account id={}, current balance={}, balance with interest={}, allowed increase={}, new balance={}",
-                    id, currentBalance, balanceWithInterest, increasingAllowed, newBalance);
+            if (currentBalance >= maxBalanceWithInterest) {
+                log.info("Limit of interest is reached for account id={}", id);
+                return;
+            }
+
+            Double balanceWithInterest = currentBalance + currentBalance * minuteInterestRate;
+            Double newBalance = Math.min(balanceWithInterest, maxBalanceWithInterest);
+
+            log.info("Account id={}, current balance={}, balance with interest={}, max balance with interest={}, new balance={}",
+                    id, currentBalance, balanceWithInterest, maxBalanceWithInterest, newBalance);
 
             account.setBalance(newBalance);
             bankAccountRepository.save(account);

@@ -15,10 +15,10 @@ CREATE TABLE users
 
 CREATE TABLE bank_accounts
 (
-    id              INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    initial_balance DOUBLE PRECISION NOT NULL CHECK (initial_balance >= 0),
-    balance         DOUBLE PRECISION NOT NULL CHECK (balance >= 0),
-    user_id         INTEGER          NOT NULL,
+    id                        INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    balance                   DOUBLE PRECISION NOT NULL CHECK (balance >= 0),
+    max_balance_with_interest DOUBLE PRECISION NOT NULL CHECK (max_balance_with_interest >= 0),
+    user_id                   INTEGER          NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 

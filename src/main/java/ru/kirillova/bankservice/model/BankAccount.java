@@ -1,6 +1,7 @@
 package ru.kirillova.bankservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -19,24 +20,24 @@ import lombok.Setter;
 public class BankAccount extends AbstractBaseEntity {
 
     @Column(nullable = false)
-    private Double initialBalance;
+    private Double balance;
 
     @Column(nullable = false)
-    private Double balance;
+    @JsonIgnore
+    private Double maxBalanceWithInterest;
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     @JsonIgnore
     private User user;
 
-    public BankAccount(Integer id, Double initialBalance, Double balance) {
+    public BankAccount(Integer id, Double balance, Double maxBalanceWithInterest) {
         super(id);
-        this.initialBalance = initialBalance;
         this.balance = balance;
+        this.maxBalanceWithInterest = maxBalanceWithInterest;
     }
 
-    public BankAccount(Double initialBalance, Double balance) {
-        this.initialBalance = initialBalance;
+    public BankAccount(Double balance) {
         this.balance = balance;
     }
 
@@ -44,7 +45,7 @@ public class BankAccount extends AbstractBaseEntity {
     public String toString() {
         return "BankAccount{" +
                 "id=" + id +
-                ", initialBalance=" + initialBalance +
+                ", maxBalanceWithInterest=" + maxBalanceWithInterest +
                 ", balance=" + balance +
                 ", user=" + (user != null ? user.getId() : null) +
                 '}';

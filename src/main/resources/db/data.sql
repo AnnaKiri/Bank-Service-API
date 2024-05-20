@@ -17,7 +17,7 @@ VALUES ((SELECT id FROM users WHERE username = 'user1'), (SELECT id FROM users W
        ((SELECT id FROM users WHERE username = 'user3'), (SELECT id FROM users WHERE username = 'user1'), -100.0,
         'FAIL');
 
-INSERT INTO bank_accounts (initial_balance, balance, user_id)
-VALUES (1000.0, 1100.0, (SELECT id FROM users WHERE username = 'user1')),
-       (2000.0, 1800.0, (SELECT id FROM users WHERE username = 'user2')),
-       (3000.0, 3100.0, (SELECT id FROM users WHERE username = 'user3'));
+INSERT INTO bank_accounts (balance, max_balance_with_interest, user_id)
+VALUES (1100.0, 2070.0, (SELECT id FROM users WHERE username = 'user1')),
+       (1800.0, 4140.0, (SELECT id FROM users WHERE username = 'user2')),
+       (3100.0, 6210.0, (SELECT id FROM users WHERE username = 'user3'));

@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.kirillova.bankservice.model.BankAccount;
 import ru.kirillova.bankservice.model.User;
-import ru.kirillova.bankservice.repository.BankAccountRepository;
+import ru.kirillova.bankservice.service.BankAccountService;
 import ru.kirillova.bankservice.service.UserService;
 import ru.kirillova.bankservice.to.UserTo;
 import ru.kirillova.bankservice.util.UsersUtil;
@@ -42,7 +42,7 @@ public class UserController extends AbstractUserController {
     static final String REST_URL = "/users";
 
     private final Logger log = getLogger(getClass());
-    private final BankAccountRepository bankAccountRepository;
+    private final BankAccountService bankAccountService;
     private final UniqueUsernameValidator uniqueUsernameValidator;
     private final UserService userService;
 
@@ -62,9 +62,9 @@ public class UserController extends AbstractUserController {
         User user = UsersUtil.createNewFromTo(userTo);
         User userCreated = userRepository.prepareAndSaveWithPassword(user);
 
-        BankAccount bankAccount = new BankAccount(userTo.getAmountMoney(), userTo.getAmountMoney());
+        BankAccount bankAccount = new BankAccount(userTo.getAmountMoney());
         bankAccount.setUser(userCreated);
-        BankAccount bankAccountCreated = bankAccountRepository.save(bankAccount);
+        BankAccount bankAccountCreated = bankAccountService.prepareAndSave(bankAccount);
         userCreated.setBankAccount(bankAccountCreated);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
