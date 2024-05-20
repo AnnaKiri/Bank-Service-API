@@ -14,7 +14,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "transfers")
+@Table(name = "transfer")
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

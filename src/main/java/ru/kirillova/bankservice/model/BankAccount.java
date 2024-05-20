@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "bank_accounts")
+@Table(name = "bank_account")
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

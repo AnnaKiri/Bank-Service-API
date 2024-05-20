@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS bank_accounts;
-DROP TABLE IF EXISTS transfers;
+DROP TABLE IF EXISTS bank_account;
+DROP TABLE IF EXISTS transfer;
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users
@@ -13,7 +13,7 @@ CREATE TABLE users
     full_name  VARCHAR NOT NULL
 );
 
-CREATE TABLE bank_accounts
+CREATE TABLE bank_account
 (
     id                        INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     balance                   DOUBLE PRECISION NOT NULL CHECK (balance >= 0),
@@ -22,7 +22,7 @@ CREATE TABLE bank_accounts
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
-CREATE TABLE transfers
+CREATE TABLE transfer
 (
     id          INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     sender_id   INTEGER                             NOT NULL,
@@ -34,5 +34,5 @@ CREATE TABLE transfers
     FOREIGN KEY (receiver_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
-CREATE INDEX idx_sender_id ON transfers (sender_id);
-CREATE INDEX idx_receiver_id ON transfers (receiver_id);
+CREATE INDEX idx_sender_id ON transfer (sender_id);
+CREATE INDEX idx_receiver_id ON transfer (receiver_id);
