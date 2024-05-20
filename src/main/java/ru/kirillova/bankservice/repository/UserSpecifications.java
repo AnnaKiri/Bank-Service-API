@@ -18,7 +18,7 @@ public class UserSpecifications {
     }
 
     public static Specification<User> hasFullNameLike(String fullName) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.like(criteriaBuilder.lower(root.get("fullName")), "%" + fullName.toLowerCase() + "%");
+        return (root, query, criteriaBuilder) -> criteriaBuilder.like(criteriaBuilder.lower(root.get("fullName")), fullName.toLowerCase() + "%");
     }
 
     public static Specification<User> hasEmail(String email) {
