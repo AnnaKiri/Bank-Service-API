@@ -41,6 +41,7 @@ import static ru.kirillova.bankservice.TransferTestData.transfer2;
 import static ru.kirillova.bankservice.TransferTestData.transfer3;
 import static ru.kirillova.bankservice.TransferTestData.transfer4;
 import static ru.kirillova.bankservice.TransferTestData.transfer5;
+import static ru.kirillova.bankservice.UserTestData.NOT_FOUND;
 import static ru.kirillova.bankservice.UserTestData.USER1_ID;
 import static ru.kirillova.bankservice.UserTestData.user1;
 import static ru.kirillova.bankservice.UserTestData.user2;
@@ -92,7 +93,7 @@ class ProfileTransferControllerTest {
     }
 
     @Test
-    void getAllUser1() throws Exception {
+    void getAllForUser1() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL)
                 .header("Authorization", "Bearer " + tokens.get(user1.getId())))
                 .andExpect(status().isOk())
@@ -102,7 +103,7 @@ class ProfileTransferControllerTest {
     }
 
     @Test
-    void getAllUser2() throws Exception {
+    void getAllForUser2() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL)
                 .header("Authorization", "Bearer " + tokens.get(user2.getId())))
                 .andExpect(status().isOk())
@@ -214,6 +215,18 @@ class ProfileTransferControllerTest {
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(content().string(containsString("Receiver id is required")));
+    }
+
+    @Test
+    void makeTransferToNotExistedReceiver() throws Exception {
+        TransferTo newTo = new TransferTo(null, null, NOT_FOUND, 100.0);
+        perform(MockMvcRequestBuilders.post(REST_URL)
+                .header("Authorization", "Bearer " + tokens.get(user3.getId()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(newTo)))
+                .andDo(print())
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(containsString("User id=" + NOT_FOUND + " does not exist")));
     }
 
     @Test
