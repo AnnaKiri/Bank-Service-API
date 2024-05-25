@@ -1,12 +1,12 @@
 package ru.kirillova.bankservice.to;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Setter
-@Getter
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class AuthResponseTo {
     private String token;
 }

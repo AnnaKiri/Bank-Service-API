@@ -1,11 +1,13 @@
 package ru.kirillova.bankservice.util;
 
+import lombok.experimental.UtilityClass;
 import ru.kirillova.bankservice.model.Transfer;
 import ru.kirillova.bankservice.to.TransferTo;
 
 import java.util.Collection;
 import java.util.List;
 
+@UtilityClass
 public class TransferUtil {
 
     public static TransferTo createTo(Transfer transfer) {

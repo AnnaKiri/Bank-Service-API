@@ -36,7 +36,6 @@ import static ru.kirillova.bankservice.validation.ValidationUtil.checkNew;
 
 @RestController
 @RequestMapping(value = UserController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-@SecurityRequirement(name = "Bearer Authentication")
 @AllArgsConstructor
 public class UserController extends AbstractUserController {
     static final String REST_URL = "/users";
@@ -55,7 +54,6 @@ public class UserController extends AbstractUserController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     @Transactional
-    @SecurityRequirement(name = "")
     public ResponseEntity<User> register(@Valid @RequestBody UserTo userTo) {
         log.info("register a new user {}", userTo);
         checkNew(userTo);
@@ -73,6 +71,7 @@ public class UserController extends AbstractUserController {
     }
 
     @GetMapping("/search")
+    @SecurityRequirement(name = "Bearer Authentication")
     public Page<User> searchUsers(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate birthDate,
             @RequestParam(required = false) String phone,

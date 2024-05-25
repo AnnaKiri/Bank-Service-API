@@ -1,9 +1,7 @@
 package ru.kirillova.bankservice.web;
 
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,7 +16,6 @@ import ru.kirillova.bankservice.to.LoginRequestTo;
 @RestController
 @Slf4j
 @AllArgsConstructor
-@SecurityRequirement(name = "Bearer Authentication")
 public class AuthController {
 
     private AuthenticationManager authenticationManager;
